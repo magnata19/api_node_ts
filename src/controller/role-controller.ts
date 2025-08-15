@@ -16,7 +16,7 @@ export class RoleController {
       const createdRole = await this.roleService.createRole(role.data as any);
       res.status(201).json({ message: "Papel criado com sucesso.", role: createdRole });
     } catch (err) {
-      next(err);
+      res.status(400).json({ message: 'Erro ao criar papel.', err });
     }
   }
 }

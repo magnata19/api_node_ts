@@ -16,7 +16,7 @@ export default class UserController {
         const error = result.error.issues.map((err) => err.message);
         return next(new InvalidFieldsError(error as any, 422))
       }
-      const user = await this.userService.createUser(result.data as User);
+      const user = await this.userService.createUser(result.data);
       res.status(201).json({ message: user.message });
     } catch (err) {
       next(err)

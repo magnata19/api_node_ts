@@ -14,20 +14,39 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String    @db.VarChar(100)
-  surname   String    @db.VarChar(100)
-  email     String    @unique @db.VarChar(100)
-  password  String    @db.VarChar(255)
-  role      Role?     @relation(fields: [roleId], references: [id])
-  roleId    String
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id             String               @id @default(uuid())
+  name           String               @db.VarChar(100)
+  surname        String               @db.VarChar(100)
+  email          String               @unique @db.VarChar(100)
+  password       String               @db.VarChar(255)
+  createdAt      DateTime?            @default(now())
+  updatedAt      DateTime?            @updatedAt
+  userPermission UserRolePermission[]
 }
 
 model Role {
-  id          String  @id @default(uuid())
-  name        String  @unique @db.VarChar(50)
-  description String? @db.VarChar(255)
-  users       User[]
+  id             String               @id @default(uuid())
+  name           String               @unique @db.VarChar(50)
+  description    String?              @db.VarChar(255)
+  rolePermission UserRolePermission[]
+}
+
+model Permission {
+  id             String               @id @default(uuid())
+  name           String               @unique @db.VarChar(50)
+  description    String?              @db.VarChar(255)
+  userPermission UserRolePermission[]
+}
+
+model UserRolePermission {
+  id           String     @id @default(uuid())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId String
+  Role         Role       @relation(fields: [roleId], references: [id])
+  roleId       String
+
+  @@unique([userId, permissionId])
+  @@map("PermissionUser")
 }

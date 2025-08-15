@@ -1,8 +1,8 @@
 import { HttpException } from "./exception-root";
 
-export class UserAlreadyExistsError extends HttpException {
-  constructor(message: string, errorCode: number, errors?: any) {
-    super(message, errorCode, 409, errors);
-    this.name = 'UserAlreadyExistsError';
+export class EntityAlreadyExistsError extends HttpException {
+  constructor(message: string, errors?: any) {
+    super(message, 409, errors);
+    this.name = 'EntityAlreadyExistsError';
   }
 }

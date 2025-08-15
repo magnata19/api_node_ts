@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.prismaClient = void 0;
 const express_1 = __importDefault(require("express"));
 const routes_1 = __importDefault(require("./routes"));
-const extension_1 = require("@prisma/client/extension");
+const client_1 = require("@prisma/client");
+const error_middleware_1 = require("./middleware/error-middleware");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(routes_1.default);
-exports.prismaClient = new extension_1.PrismaClient();
+exports.prismaClient = new client_1.PrismaClient();
+app.use(error_middleware_1.errorMiddleware);
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
