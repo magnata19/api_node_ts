@@ -7,5 +7,7 @@ const segurancaAclRouter = Router();
 const segurancaController = new SegurancaController(new SegurancaService());
 
 segurancaAclRouter.post('/seguranca/acl', authMiddleware, segurancaController.cadastrarAcl.bind(segurancaController))
+  .post('/seguranca/role-permission', authMiddleware, segurancaController.createRolePermission.bind(segurancaController));
+
 
 export default segurancaAclRouter;

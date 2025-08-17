@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import SegurancaService from "../service/seguranca-service";
 import { CustomRequest } from "../types/custom-request";
+import { User } from "@prisma/client";
 
 export default class SegurancaController {
 
@@ -15,6 +16,16 @@ export default class SegurancaController {
       res.status(201).json(result)
     } catch (err) {
       next(err)
+    }
+  }
+
+  async createRolePermission(req: CustomRequest, res: Response, next: NextFunction) {
+    const { roleId, permissionId } = req.body;
+    try {
+      const result = await this.segurancaService.createPermissionRole(roleId, permissionId);
+      res.status(201).json(result);
+    } catch (err) {
+      next(err);
     }
   }
 }

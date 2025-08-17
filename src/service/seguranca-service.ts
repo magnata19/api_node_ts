@@ -1,3 +1,4 @@
+import id from "zod/v4/locales/id.js";
 import { prismaClient } from "..";
 import { EntityNotFound } from "../errors/entity-not-found";
 
@@ -56,6 +57,50 @@ export default class SegurancaService {
         })
 
         return newUser;
+
+    }
+
+    async createPermissionRole(roleId: string, permissions: string[]): Promise<any> {
+        const roleData = await prismaClient.role.findFirst({
+            where: {
+                id: roleId
+            }
+        })
+
+        const permissionsFound = await prismaClient.permission.findMany({
+            where: {
+                id: {
+                    in: permissions
+                }
+            }
+        })
+
+        if (!roleData) throw new EntityNotFound("Função não encontrada");
+        if (!permissionsFound || permissionsFound.length === 0) throw new EntityNotFound("Permissão não encontrada");
+
+        await prismaClient.permissionRole.createMany({
+            data: permissionsFound.map(permission => {
+                return {
+                    roleId,
+                    permissionId: permission.id
+                }
+            })
+        })
+
+        const newRole = await prismaClient.role.findFirst({
+            where: {
+                id: roleId
+            },
+            include: {
+                permissionRole: {
+                    include: {
+                        permission: true
+                    }
+                }
+            }
+        })
+
+        return newRole;
 
     }
 }

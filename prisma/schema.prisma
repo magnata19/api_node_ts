@@ -29,6 +29,7 @@ model Role {
   name           String               @unique @db.VarChar(50)
   description    String?              @db.VarChar(255)
   rolePermission UserRolePermission[]
+  permissionRole PermissionRole[]
 }
 
 model Permission {
@@ -36,6 +37,7 @@ model Permission {
   name           String               @unique @db.VarChar(50)
   description    String?              @db.VarChar(255)
   userPermission UserRolePermission[]
+  PermissionRole PermissionRole[]
 }
 
 model UserRolePermission {
@@ -49,4 +51,14 @@ model UserRolePermission {
 
   @@unique([userId, permissionId])
   @@map("PermissionUser")
+}
+
+model PermissionRole {
+  id           String     @id @default(uuid())
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id])
+  roleId       String
+
+  @@unique([roleId, permissionId])
 }
