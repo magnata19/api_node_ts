@@ -103,4 +103,40 @@ export default class SegurancaService {
         return newRole;
 
     }
+
+    async addRoleTOUser(userId: string, roleId: string) {
+        const user = await prismaClient.user.findFirst({
+            where: {
+                id: userId
+            }
+        })
+        if (!user) throw new EntityNotFound("Usuário não encontrado");
+
+        const role = await prismaClient.role.findFirst({
+            where: {
+                id: roleId
+            }
+        })
+        if (!role) throw new EntityNotFound("Função não encontrada");
+
+        await prismaClient.userRolePermission.create({
+            data: {
+                userId,
+                roleId
+            }
+        })
+
+        return prismaClient.user.findFirst({
+            where: {
+                id: userId
+            },
+            include: {
+                userPermission: {
+                    include: {
+                        Role: true
+                    }
+                }
+            }
+        })
+    }
 }

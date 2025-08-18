@@ -28,4 +28,15 @@ export default class SegurancaController {
       next(err);
     }
   }
+
+  async addRoleToUser(req: CustomRequest, res: Response, next: NextFunction) {
+    const user = req.user
+    const { roleId } = req.body;
+    try {
+      const result = await this.segurancaService.addRoleTOUser(user!.id, roleId);
+      res.status(201).json(result)
+    } catch (err) {
+      next(err)
+    }
+  }
 }

@@ -26,4 +26,20 @@ export default class UserService {
   async getUsers(): Promise<any[]> {
     return await prismaClient.user.findMany();
   }
+
+  async getUserById(id: string): Promise<any> {
+    return await prismaClient.user.findFirst({
+      where: {
+        id
+      },
+      include: {
+        userPermission: {
+          include: {
+            Role: true,
+            permission: true
+          }
+        }
+      }
+    })
+  }
 }

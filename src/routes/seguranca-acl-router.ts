@@ -6,8 +6,10 @@ import { authMiddleware } from "../middleware/auth-middleware";
 const segurancaAclRouter = Router();
 const segurancaController = new SegurancaController(new SegurancaService());
 
-segurancaAclRouter.post('/seguranca/acl', authMiddleware, segurancaController.cadastrarAcl.bind(segurancaController))
-  .post('/seguranca/role-permission', authMiddleware, segurancaController.createRolePermission.bind(segurancaController));
+segurancaAclRouter
+  .post('/seguranca/acl', authMiddleware, segurancaController.cadastrarAcl.bind(segurancaController))
+  .post('/seguranca/role-permission', authMiddleware, segurancaController.createRolePermission.bind(segurancaController))
+  .post('/seguranca/create-user-role/', authMiddleware, segurancaController.addRoleToUser.bind(segurancaController));
 
 
 export default segurancaAclRouter;

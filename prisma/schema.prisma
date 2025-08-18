@@ -41,12 +41,12 @@ model Permission {
 }
 
 model UserRolePermission {
-  id           String     @id @default(uuid())
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String      @id @default(uuid())
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-  permissionId String
-  Role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission? @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId String?
+  Role         Role        @relation(fields: [roleId], references: [id])
   roleId       String
 
   @@unique([userId, permissionId])
@@ -61,4 +61,11 @@ model PermissionRole {
   roleId       String
 
   @@unique([roleId, permissionId])
+}
+
+model Store {
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(100)
+  description String? @db.VarChar(100)
+  location    String? @db.VarChar(255)
 }
