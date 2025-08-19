@@ -24,7 +24,14 @@ export default class UserController {
   }
 
   async validateAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
-
+    const { token } = req.params;
+    const { userId } = req.body;
+    try {
+      await this.userService.validateAccount(userId!, token!);
+      res.status(200).json({ message: "Conta confirmada com sucesso!" })
+    } catch (err) {
+      next(err)
+    }
   }
 
   async getUsers(req: CustomRequest, res: Response, next: NextFunction): Promise<void> {

@@ -56,10 +56,10 @@ export default class UserService {
     }
   }
 
-  async validateAccount(email: string, token: string) {
+  async validateAccount(id: string, token: string) {
     const user = await prismaClient.user.findFirst({
       where: {
-        email
+        id
       }
     })
     if (!user) {
@@ -69,7 +69,7 @@ export default class UserService {
     if (user.confirmCode === token && user.confirmed == false) {
       await prismaClient.user.update({
         where: {
-          email
+          id
         },
         data: {
           confirmed: true
