@@ -10,6 +10,7 @@ export default class UserService {
         message: string;
     }>;
     getUsers(): Promise<any[]>;
+    getUserById(id: string): Promise<any>;
 }
 export {};
 //# sourceMappingURL=user-service.d.ts.map

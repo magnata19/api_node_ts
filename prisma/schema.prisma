@@ -21,6 +21,8 @@ model User {
   password       String               @db.VarChar(255)
   createdAt      DateTime?            @default(now())
   updatedAt      DateTime?            @updatedAt
+  confirmed      Boolean?             @default(false)
+  confirmCode    String?
   userPermission UserRolePermission[]
 }
 

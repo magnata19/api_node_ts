@@ -23,6 +23,10 @@ export default class UserController {
     }
   }
 
+  async validateAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
+
+  }
+
   async getUsers(req: CustomRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const users = await this.userService.getUsers();

@@ -30,6 +30,14 @@ class UserController {
             next(err);
         }
     }
+    async getUserById(req, res, next) {
+        const userId = req.params.id;
+        const user = await this.userService.getUserById(userId);
+        if (!user) {
+            res.status(404).json({ message: "Usuário não encontrado." });
+        }
+        res.status(200).json(user);
+    }
 }
 exports.default = UserController;
 //# sourceMappingURL=user-controller.js.map

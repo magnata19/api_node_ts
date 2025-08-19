@@ -6,5 +6,6 @@ export default class UserController {
     constructor(userService: UserService);
     createUser(req: Request, res: Response, next: NextFunction): Promise<void>;
     getUsers(req: CustomRequest, res: Response, next: NextFunction): Promise<void>;
+    getUserById(req: CustomRequest, res: Response, next: NextFunction): Promise<void>;
 }
 //# sourceMappingURL=user-controller.d.ts.map
