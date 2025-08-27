@@ -1,19 +1,18 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:latest
+  postgres:
+    image: postgres:15
     container_name: ecommerce_db
     environment:
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: ecommerce_db
-      MYSQL_ROOT_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ecommerce_db
 
     ports:
-      - 3306:3306
+      - 5432:5432
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
     restart: unless-stopped
